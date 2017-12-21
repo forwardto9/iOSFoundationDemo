@@ -13,6 +13,7 @@
 		C25C568F1FEBD72600A865FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C25C568E1FEBD72600A865FA /* Assets.xcassets */; };
 		C25C56921FEBD72600A865FA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C25C56901FEBD72600A865FA /* LaunchScreen.storyboard */; };
 		C25C56951FEBD72600A865FA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C25C56941FEBD72600A865FA /* main.m */; };
+		C25C569D1FEBD76300A865FA /* TestObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C25C569B1FEBD76300A865FA /* TestObject.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,8 @@
 		C25C56911FEBD72600A865FA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C25C56931FEBD72600A865FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C25C56941FEBD72600A865FA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C25C569B1FEBD76300A865FA /* TestObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestObject.m; sourceTree = "<group>"; };
+		C25C569C1FEBD76300A865FA /* TestObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestObject.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +61,8 @@
 		C25C56841FEBD72600A865FA /* iOSFoundationDemo */ = {
 			isa = PBXGroup;
 			children = (
+				C25C569C1FEBD76300A865FA /* TestObject.h */,
+				C25C569B1FEBD76300A865FA /* TestObject.m */,
 				C25C56851FEBD72600A865FA /* AppDelegate.h */,
 				C25C56861FEBD72600A865FA /* AppDelegate.m */,
 				C25C56881FEBD72600A865FA /* ViewController.h */,
@@ -144,6 +149,7 @@
 			files = (
 				C25C568A1FEBD72600A865FA /* ViewController.m in Sources */,
 				C25C56951FEBD72600A865FA /* main.m in Sources */,
+				C25C569D1FEBD76300A865FA /* TestObject.m in Sources */,
 				C25C56871FEBD72600A865FA /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
