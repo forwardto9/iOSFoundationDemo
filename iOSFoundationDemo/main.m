@@ -342,6 +342,21 @@ int main(int argc, char * argv[]) {
     // Relational conditions, such as group.name like "work*"
     // Aggregate operations, such as @sum.items.price < 1000
     // Reference URL:https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Predicates/Articles/pSyntax.html#//apple_ref/doc/uid/TP40001795
+    
+#pragma mark - Task Management
+//    [o1.undoManager setActionName:@"addUndoOperation"];
+    NSLog(@"name is %@", o1.name);
+    [o1 changeName:@"new_name"];
+    NSLog(@"name is %@", o1.name);
+    [o1.undoManager undo];
+    NSLog(@"name is %@", o1.name);
+    if ([o1.undoManager canRedo]) {
+        [o1.undoManager redo];
+        NSLog(@"name is %@", o1.name);
+    }
+    
+    
+    
     @autoreleasepool {
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
     }

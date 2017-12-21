@@ -15,6 +15,7 @@
     if (self = [super init]) {
         _age = age;
         _name = name;
+        _undoManager = [[NSUndoManager alloc] init];
     }
     
     
@@ -51,6 +52,10 @@
 - (void)method2:(NSString *)p1 {
 //    NSParameterAssert(p1);
     NSLog(@"%@", p1);
+    _name = p1;
+    
+    [_undoManager registerUndoWithTarget:self selector:@selector(addUndoOperation) object:nil];
+    [_undoManager setActionName:@"redo"];
 }
 
 + (NSDictionary *)jcePropertiesWithEncodedTypes {
@@ -72,7 +77,37 @@
     return theProps;
 }
 
+- (void)changeName:(NSString *)name {
+    NSLog(@"%s", __FUNCTION__);
+    [_undoManager registerUndoWithTarget:self selector:@selector(unchangeName:) object:self.name];
+    [_undoManager setActionName:@"undo"];
+    _name = name;
+}
 
+- (void)unchangeName:(NSString *)name {
+    NSLog(@"%s", __FUNCTION__);
+    [_undoManager registerUndoWithTarget:self selector:@selector(changeName:) object:self.name];
+    [_undoManager setActionName:@"redo"];
+    _name = name;
+}
+
+- (void)startTaskWithData:(NSData *)data {
+    NSUInteger batchSize = 10;
+    [self.report.progress setTotalUnitCount:10];
+    
+    for (NSUInteger index = 0; index < batchSize; index++) {
+        // Check for cancellation
+        if ([self.report.progress isCancelled]) {
+            // Tidy up as necessary...
+            break;
+        }
+        
+        // Do something with this batch of data...
+        
+        // Report progress (add 1 because we've completed the work for the current index).
+        [self.report.progress setCompletedUnitCount:(index + 1)];
+    }
+}
 
 
 @end
