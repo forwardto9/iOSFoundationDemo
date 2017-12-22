@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C24AE0D81FECA5CC001E2775 /* UserActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C24AE0D71FECA5CC001E2775 /* UserActivityViewController.m */; };
+		C24AE0DA1FECE460001E2775 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C24AE0D91FECE460001E2775 /* Settings.bundle */; };
+		C24AE0DC1FECE543001E2775 /* WGPlatformResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C24AE0DB1FECE543001E2775 /* WGPlatformResources.bundle */; };
+		C24AE0E41FECF8F0001E2775 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C24AE0E31FECF8F0001E2775 /* Media.xcassets */; };
 		C25C56871FEBD72600A865FA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C25C56861FEBD72600A865FA /* AppDelegate.m */; };
 		C25C568A1FEBD72600A865FA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C25C56891FEBD72600A865FA /* ViewController.m */; };
 		C25C568D1FEBD72600A865FA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C25C568B1FEBD72600A865FA /* Main.storyboard */; };
@@ -17,6 +21,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C24AE0D61FECA5CC001E2775 /* UserActivityViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserActivityViewController.h; sourceTree = "<group>"; };
+		C24AE0D71FECA5CC001E2775 /* UserActivityViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserActivityViewController.m; sourceTree = "<group>"; };
+		C24AE0D91FECE460001E2775 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		C24AE0DB1FECE543001E2775 /* WGPlatformResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = WGPlatformResources.bundle; sourceTree = "<group>"; };
+		C24AE0E31FECF8F0001E2775 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		C25C56821FEBD72600A865FA /* iOSFoundationDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSFoundationDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C25C56851FEBD72600A865FA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C25C56861FEBD72600A865FA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -61,17 +70,22 @@
 		C25C56841FEBD72600A865FA /* iOSFoundationDemo */ = {
 			isa = PBXGroup;
 			children = (
+				C24AE0DB1FECE543001E2775 /* WGPlatformResources.bundle */,
 				C25C569C1FEBD76300A865FA /* TestObject.h */,
 				C25C569B1FEBD76300A865FA /* TestObject.m */,
 				C25C56851FEBD72600A865FA /* AppDelegate.h */,
 				C25C56861FEBD72600A865FA /* AppDelegate.m */,
 				C25C56881FEBD72600A865FA /* ViewController.h */,
 				C25C56891FEBD72600A865FA /* ViewController.m */,
+				C24AE0D61FECA5CC001E2775 /* UserActivityViewController.h */,
+				C24AE0D71FECA5CC001E2775 /* UserActivityViewController.m */,
 				C25C568B1FEBD72600A865FA /* Main.storyboard */,
 				C25C568E1FEBD72600A865FA /* Assets.xcassets */,
 				C25C56901FEBD72600A865FA /* LaunchScreen.storyboard */,
 				C25C56931FEBD72600A865FA /* Info.plist */,
 				C25C56941FEBD72600A865FA /* main.m */,
+				C24AE0E31FECF8F0001E2775 /* Media.xcassets */,
+				C24AE0D91FECE460001E2775 /* Settings.bundle */,
 			);
 			path = iOSFoundationDemo;
 			sourceTree = "<group>";
@@ -102,12 +116,17 @@
 		C25C567A1FEBD72600A865FA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					test1,
+					test2,
+					test3,
+				);
 				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = uwei;
 				TargetAttributes = {
 					C25C56811FEBD72600A865FA = {
 						CreatedOnToolsVersion = 9.2;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -134,8 +153,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C24AE0DA1FECE460001E2775 /* Settings.bundle in Resources */,
 				C25C56921FEBD72600A865FA /* LaunchScreen.storyboard in Resources */,
+				C24AE0DC1FECE543001E2775 /* WGPlatformResources.bundle in Resources */,
 				C25C568F1FEBD72600A865FA /* Assets.xcassets in Resources */,
+				C24AE0E41FECF8F0001E2775 /* Media.xcassets in Resources */,
 				C25C568D1FEBD72600A865FA /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -147,6 +169,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C24AE0D81FECA5CC001E2775 /* UserActivityViewController.m in Sources */,
 				C25C568A1FEBD72600A865FA /* ViewController.m in Sources */,
 				C25C56951FEBD72600A865FA /* main.m in Sources */,
 				C25C569D1FEBD76300A865FA /* TestObject.m in Sources */,
@@ -224,7 +247,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -273,7 +296,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -284,11 +307,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 299MFJ63GP;
 				INFOPLIST_FILE = iOSFoundationDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ON_DEMAND_RESOURCES_INITIAL_INSTALL_TAGS = test3;
+				ON_DEMAND_RESOURCES_PREFETCH_ORDER = test2;
 				PRODUCT_BUNDLE_IDENTIFIER = tencent.iOSFoundationDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "4fa06929-99da-4177-a0bf-6d3b982be84a";
+				PROVISIONING_PROFILE_SPECIFIER = common_dev;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -297,11 +325,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = iOSFoundationDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ON_DEMAND_RESOURCES_INITIAL_INSTALL_TAGS = test3;
+				ON_DEMAND_RESOURCES_PREFETCH_ORDER = test2;
 				PRODUCT_BUNDLE_IDENTIFIER = tencent.iOSFoundationDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

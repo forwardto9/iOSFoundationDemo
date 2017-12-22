@@ -109,5 +109,18 @@
     }
 }
 
+- (NSUserActivity *)addUserActivity {
+    NSUserActivity *userActivity = [[NSUserActivity alloc] initWithActivityType:@"com.tencent.uwei.openPage"];
+    [userActivity setTitle:@"test"];
+    [userActivity setKeywords:[NSSet setWithArray:@[@"uwei",@"yuan", @"fuck"]]];
+    userActivity.eligibleForSearch = YES;
+    userActivity.eligibleForHandoff = NO;
+    userActivity.eligibleForPublicIndexing = YES;
+    userActivity.referrerURL = [NSURL URLWithString:@"http://www.baidu.com"];
+    [userActivity becomeCurrent];
+    
+    return userActivity;
+}
+
 
 @end

@@ -23,4 +23,6 @@
 
 - (void)changeName:(NSString *)name;
 
+- (NSUserActivity *)addUserActivity;
+
 @end

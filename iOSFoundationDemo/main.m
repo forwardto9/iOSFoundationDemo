@@ -11,7 +11,8 @@
 #import "TestObject.h"
 
 int main(int argc, char * argv[]) {
-#pragma mark - Numbers, Data, and Basic Values & Data Formatting
+#pragma mark - Fundamentals
+// // TODO: - Numbers, Data, and Basic Values & Data Formatting
     // 123 x 10-3
     NSDecimal decimal = {-3,5,0,1,0,123};
     NSLocale* locale = [NSLocale autoupdatingCurrentLocale];
@@ -74,7 +75,7 @@ int main(int argc, char * argv[]) {
     // 规律一：NSFormatter， 对于很多数据格式化，都是有Foundation定义的(NSByteCountFormatter, NSDateFormatter, NSDateComponentsFormatter, NSDateIntervalFormatter, NSEnergyFormatter, NSLengthFormatter, NSMassFormatter, NSNumberFormatter, and NSPersonNameComponentsFormatter)
     // 规律二：NS****FromString、 NSStringFrom****，****代表大多数OC中原生的数据类型
     
-#pragma mark - Strings and Text
+// TODO: - Strings and Text
     
     NSString *text = @"我们是共产主义接班人，迎接着朝霞";
     NSLinguisticTagger *tagger = [[NSLinguisticTagger alloc] initWithTagSchemes:@[NSLinguisticTagSchemeTokenType] options:0];
@@ -119,7 +120,7 @@ int main(int argc, char * argv[]) {
     [stringScanner scanInt:&i];
     NSLog(@"int is %ld", (long)i);
     
-#pragma mark - Collections
+// // TODO: - Collections
     NSArray *name1Array = @[@"g", @"b", @"c", @"d"];
     NSArray *name2Array = @[@"a", @"f", @"d", @"g"];
     NSCountedSet *countedName1Set = [[NSCountedSet alloc] initWithArray:name1Array];
@@ -152,7 +153,7 @@ int main(int argc, char * argv[]) {
     NSLog(@"%@", pointerArray);
     NSLog(@"%d", *(int *)([pointerArray pointerAtIndex:0]));
     
-#pragma mark - Dates and Times
+// TODO: - Dates and Times
     NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
     dateComponents.day = 20;
     dateComponents.month = 12;
@@ -228,7 +229,7 @@ int main(int argc, char * argv[]) {
         NSLog(@"%@", obj);
     }];
     
-#pragma mark - Units and Measurement
+// TODO: - Units and Measurement
     //    NSUnit *pressUnit = [NSUnitPressure kilopascals];
     NSUnit *pressUnit = [NSUnitLength meters];
     NSMeasurement *measurement = [[NSMeasurement alloc] initWithDoubleValue:1007.98 unit:pressUnit];
@@ -246,7 +247,7 @@ int main(int argc, char * argv[]) {
     
     // 总结：有很多物理学度量的类：Physical Dimension、Mass, Weight, and Force、Time and Motion、Energy, Heat, and Light、Electricity、Concentration and Dispersion、Fuel Efficiency
     
-#pragma mark - Filters and Sorting
+// TODO: - Filters and Sorting
     NSString *testMatchString = @"we are the champion";
     // self指向evaluateWithObject的参数
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self BEGINSWITH[c] 'We'"];
@@ -342,8 +343,8 @@ int main(int argc, char * argv[]) {
     // Relational conditions, such as group.name like "work*"
     // Aggregate operations, such as @sum.items.price < 1000
     // Reference URL:https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Predicates/Articles/pSyntax.html#//apple_ref/doc/uid/TP40001795
-    
-#pragma mark - Task Management
+#pragma mark - App Support
+// TODO: - Task Management
 //    [o1.undoManager setActionName:@"addUndoOperation"];
     NSLog(@"name is %@", o1.name);
     [o1 changeName:@"new_name"];
@@ -355,9 +356,98 @@ int main(int argc, char * argv[]) {
         NSLog(@"name is %@", o1.name);
     }
     
+    NSProcessInfo *processInfo = [NSProcessInfo processInfo];
+    // You use activities when your application is performing a long-running operation
+    // If the activity can take different amounts of time (for example, calculating the next move in a chess game), it should use this API.
+    // In addition, if your application requires high priority I/O, you can include the NSActivityLatencyCritical flag (using a bitwise OR). You should only use this flag for activities like audio or video recording that really do require high priority.
+    // If your activity takes place synchronously inside an event callback on the main thread, you do not need to use this API.
+    // This API also provides a mechanism to disable system-wide idle sleep and display idle sleep.
+    NSLog(@"Accessing Process Information:%@===%@===%@===%@===%d", processInfo.arguments.description, processInfo.environment, processInfo.processName, processInfo.globallyUniqueString, processInfo.processIdentifier);
+    
+    NSLog(@"Getting Host Information:%@===%ld===%@===%@===%@", processInfo.hostName, processInfo.operatingSystem, processInfo.operatingSystemName, processInfo.operatingSystemVersionString, [NSString stringWithFormat:@"%ld%ld%ld", processInfo.operatingSystemVersion.majorVersion, processInfo.operatingSystemVersion.minorVersion, processInfo.operatingSystemVersion.patchVersion]);
+    
+    
+    NSLog(@"Getting Computer Information:%ld===%ld===%lld===%f", processInfo.processorCount, processInfo.activeProcessorCount, processInfo.physicalMemory, processInfo.systemUptime);
+    // 设备的温度水平
+    NSString *thermalStateString = nil;
+    switch (processInfo.thermalState) {
+        case NSProcessInfoThermalStateFair:
+            thermalStateString = @"Fair";
+            break;
+        case NSProcessInfoThermalStateNominal:
+            thermalStateString = @"Normal";
+            break;
+        case NSProcessInfoThermalStateSerious:
+            thermalStateString = @"Serious";
+            break;
+        case NSProcessInfoThermalStateCritical:
+            thermalStateString = @"Critical";
+            break;
+            
+        default:
+            break;
+    }
+    NSLog(@"Thermal State is %@", thermalStateString);
+    
+    if (processInfo.lowPowerModeEnabled) {
+        NSLog(@"low Power Mode Enabled!");
+    } else {
+        NSLog(@"low Power Mode disabled!");
+    }
+    
+    [[UIDevice currentDevice] setBatteryMonitoringEnabled:YES];
+    NSLog(@"battery level is %3f", [[UIDevice currentDevice] batteryLevel]);
+    [[NSNotificationCenter defaultCenter] addObserverForName:UIDeviceBatteryLevelDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
+        NSLog(@"battery level is %3f", [[UIDevice currentDevice] batteryLevel]);
+    }];
+    
+    // TODO:Resource
+    [[NSBundle allBundles] enumerateObjectsUsingBlock:^(NSBundle * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSLog(@"image path is %@", [obj pathForResource:@"share_qq" ofType:@"png"]);
+    }];
+    
+    NSBundle *WGPlatformResourcesBundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"WGPlatformResources" ofType:@"bundle"]] ;
+    NSLog(@"nib path is %@", [WGPlatformResourcesBundle pathForResource:@"WGGameWebViewController" ofType:@"nib"]);
+    NSLog(@"image path is %@", [WGPlatformResourcesBundle pathForResource:@"share_qq" ofType:@"png" inDirectory:@"WebViewResources"]);
+    NSLog(@"image url is %@", [WGPlatformResourcesBundle URLForResource:@"share_qq" withExtension:@"png" subdirectory:@"WebViewResources"]);
+    
+    NSLog(@"%@", WGPlatformResourcesBundle.resourceURL);
+    NSLog(@"%@", [NSBundle mainBundle].resourceURL);
+    NSLog(@"%@", [NSBundle mainBundle].executablePath);
+    NSLog(@"%@", [NSBundle mainBundle].sharedFrameworksPath);
+    NSLog(@"%@", [NSBundle mainBundle].bundleIdentifier);
+    NSLog(@"%@", WGPlatformResourcesBundle.bundleIdentifier);
+    NSLog(@"%@", [NSBundle mainBundle].infoDictionary);
+    NSLog(@"%@", [[NSBundle mainBundle] executableArchitectures]);
+    
+    // Loading Code from a Bundle
+    NSError *error = nil;
+    NSLog(@"%d", [[NSBundle mainBundle] preflightAndReturnError:&error]);
+    //load、unload、loaded
+    // iOS9之后的按需加载资源, 使用NSBundleResourceRequest类
+    //https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/On_Demand_Resources_Guide/#//apple_ref/doc/uid/TP40015083-CH2-SW1
+    
+    // TODO: Notification
+    NSNotificationQueue *notificationQueue = [[NSNotificationQueue alloc] initWithNotificationCenter:[NSNotificationCenter defaultCenter]];
+    NSNotification *notification = [NSNotification notificationWithName:@"test" object:nil];
+    [notificationQueue enqueueNotification:notification postingStyle:NSPostASAP];
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
+    
+    
     
     
     @autoreleasepool {
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
     }
 }
+//    - (void)loadBundle:(id)sender
+//    {
+//        Class exampleClass;
+//        id newInstance;
+//        NSString *path = @"/tmp/Projects/BundleExample/BundleExample.bundle";
+//        NSBundle *bundleToLoad = [NSBundle bundleWithPath:path];
+//        if (exampleClass = bundleToLoad.principalClass) {
+//            newInstance = [[exampleClass alloc] init];
+//            [newInstance doSomething];
+//        }
+//    }
