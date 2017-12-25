@@ -16,6 +16,7 @@
         _age = age;
         _name = name;
         _undoManager = [[NSUndoManager alloc] init];
+        
     }
     
     
@@ -122,5 +123,8 @@
     return userActivity;
 }
 
+- (void)notificationMethod {
+    NSLog(@"%@", NSStringFromSelector(_cmd));
+}
 
 @end

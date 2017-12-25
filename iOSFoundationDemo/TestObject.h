@@ -25,4 +25,6 @@
 
 - (NSUserActivity *)addUserActivity;
 
+- (void)notificationMethod;
+
 @end

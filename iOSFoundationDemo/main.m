@@ -428,12 +428,27 @@ int main(int argc, char * argv[]) {
     //https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/On_Demand_Resources_Guide/#//apple_ref/doc/uid/TP40015083-CH2-SW1
     
     // TODO: Notification
+    NSOperationQueue *operationQueue = [NSOperationQueue mainQueue];
+//    NSOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
+//        NSLog(@"operation");
+//    }];
+    
+//    NSInvocation *invocation = [[NSInvocation alloc] init];
+//    [invocation setTarget:o1];
+//    [invocation setSelector:@selector(notificationMethod)];
+//    NSOperation *operation = [[NSInvocationOperation alloc] initWithInvocation:invocation];
+//    [operationQueue addOperation:operation];
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"test" object:o1 queue:operationQueue usingBlock:^(NSNotification * _Nonnull note) {
+        NSLog(@"*********");
+    }];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:o1 selector:@selector(notificationMethod) name:@"test" object:nil];
     NSNotificationQueue *notificationQueue = [[NSNotificationQueue alloc] initWithNotificationCenter:[NSNotificationCenter defaultCenter]];
-    NSNotification *notification = [NSNotification notificationWithName:@"test" object:nil];
+    NSNotification *notification = [NSNotification notificationWithName:@"test" object:o1];
+    // 方法一：
     [notificationQueue enqueueNotification:notification postingStyle:NSPostASAP];
+    // 方法二：
     [[NSNotificationCenter defaultCenter] postNotification:notification];
-    
-    
     
     
     @autoreleasepool {
