@@ -16,6 +16,8 @@
         _age = age;
         _name = name;
         _undoManager = [[NSUndoManager alloc] init];
+//        NSParameterAssert(age < 0);
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDefaultsDidChange:) name:NSUserDefaultsDidChangeNotification object:nil];
     }
     
     
@@ -122,5 +124,21 @@
     return userActivity;
 }
 
+- (void)userDefaultsDidChange:(NSNotification *)notification {
+    NSLog(@"%s, %@, %@", __FUNCTION__, notification.object, notification.userInfo);
+}
+
+- (BOOL)listener:(NSXPCListener *)listener shouldAcceptNewConnection:(NSXPCConnection *)newConnection {
+    [[NSUserDefaults standardUserDefaults] setObject:@"fuck u" forKey:@"fuck"];
+    return YES;
+}
+
+- (id)remoteObjectProxy {
+    return self;
+}
+
+- (id)remoteObjectProxyWithErrorHandler:(void (^)(NSError * _Nonnull))handler {
+    return self;
+}
 
 @end
