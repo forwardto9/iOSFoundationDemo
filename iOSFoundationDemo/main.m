@@ -398,6 +398,7 @@ int main(int argc, char * argv[]) {
     [[UIDevice currentDevice] setBatteryMonitoringEnabled:YES];
     NSLog(@"battery level is %3f", [[UIDevice currentDevice] batteryLevel]);
     [[NSNotificationCenter defaultCenter] addObserverForName:UIDeviceBatteryLevelDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
+        NSLog(@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"fuck"]);
         NSLog(@"battery level is %3f", [[UIDevice currentDevice] batteryLevel]);
     }];
     
@@ -450,7 +451,95 @@ int main(int argc, char * argv[]) {
     // 方法二：
     [[NSNotificationCenter defaultCenter] postNotification:notification];
     
+    //TODO: App Extension Support
     
+    // TODO: Errors and Exceptions
+    // You create assertions only using the assertion macros—you rarely need to invoke NSAssertionHandler methods directly
+    // Each thread has its own NSAssertionHandler object
+    // NSAssert方法族中的函数，只能在OC的方法中调用
+    NSString *cAssertString = @"yoyoyo";
+    NSCAssert(cAssertString, @"fuck C Assert!");
+    // NSCAssert方法族中的函数，只能在C的方法中调用
+    NSCParameterAssert(argc < 5);//方法中检查参数
+    // NSLog  & NSLogv to Apple System Log facility
+    //  TODO: Scripting Support - Only for Mac
+    
+#pragma mark - Files And Data Persistence
+    
+    // TODO: File System
+    NSLog(@"temp dir is %@", [[NSFileManager defaultManager] temporaryDirectory]);
+    NSLog(@"temp dir is %@", NSTemporaryDirectory());
+    NSLog(@"temp dir is %@", NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES));
+    NSLog(@"home dir is %@", NSHomeDirectory());
+    
+    NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initWithURL:[NSURL URLWithString:NSHomeDirectory()] options:NSFileWrapperReadingImmediate error:nil];
+    NSLog(@"%d", fileWrapper.directory); //  TODO: ?
+    
+    // Objects that allow the user to view or edit the content of files or directories should adopt the NSFilePresenter protocol. You use file presenters in conjunction with an NSFileCoordinator object to coordinate access to a file or directory among the objects of your application and between your application and other processes. When changes to an item occur, the system notifies objects that adopt this protocol and gives them a chance to respond appropriately
+    // NSFilePresenter Protocol
+    // NSFileCoordinator Class
+    // NSFileAccessIntent Class
+    // UIDocument
+    
+    
+    // TODO: Archives and Serialization
+    // Convert objects and values to and from property list, JSON, and other flat binary representations.
+    
+    //  TODO: Preferences
+    // Values returned from NSUserDefaults are immutable, even if you set a mutable object as the value.
+    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"observer user default change"];
+    
+    // An iCloud-based container of key-value pairs you use to share data among instances of your app running on a user's connected devices.
+    [[NSUbiquitousKeyValueStore defaultStore] setObject:@"" forKey:@"fuck store"];
+    
+    // TODO:  Spotlight
+    // 搜索本地设备上的文件和其他项目，并将应用程序的内容索引化以进行搜索
+    //    NSMetadataQuery
+    //    NSMetadataQueryDelegate
+    //    NSMetadataItem
+
+#pragma mark - Networking
+    // TODO: URL Loading System
+    // The URL Loading System provides access to resources identified by URLs, using standard protocols like https or custom protocols you create. Loading is performed asynchronously, so your app can remain responsive and handle incoming data or errors as they arrive.
+    // You use a NSURLSession instance to create one or more NSURLSessionTask instances, which can fetch and return data to your app, download files, or upload data and files to remote locations. To configure a session, you use a NSURLSessionConfiguration object, which controls behavior like how to use caches and cookies, or whether to allow connections on a cellular network.
+    // You can use one session repeatedly to create tasks
+    
+    // TODO: Bonjour
+    // 局域网内服务的发现和交互
+    // NSNetService NSNetServiceDelegate
+    // NSNetServiceBrowser NSNetServiceBrowserDelegate
+
+#pragma mark - Low-Level Utilities
+    // TODO:XPC
+    // Manage secure interprocess communication.
+    // NSXPCProxyCreating NSXPCConnection NSXPCInterface
+    
+    NSLog(@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"fuck"]);
+    NSXPCListener *xpcListener = [NSXPCListener anonymousListener];
+    xpcListener.delegate = o1;
+    [xpcListener resume];
+    
+    NSXPCListenerEndpoint *xpcListenerEndPoint = [xpcListener endpoint];
+    NSXPCConnection *xpcConnection = [[NSXPCConnection alloc] initWithListenerEndpoint:xpcListenerEndPoint];
+    NSXPCInterface *xpcInterface = [NSXPCInterface interfaceWithProtocol:@protocol(TestProtocol)];
+    [xpcInterface setClasses:[NSSet setWithObject:[o1 class]] forSelector:@selector(sendMessage:) argumentIndex:0 ofReply:NO];
+    xpcConnection.exportedInterface = xpcInterface;
+    xpcConnection.exportedObject = o1;
+    [xpcConnection resume];
+    [[xpcConnection remoteObjectProxy] performSelector:@selector(testxpc:) withObject:@"fuck1"];
+    
+    [[NSRunLoop currentRunLoop] run];
+    
+    // TODO: Run Time
+    // refrence RunTimeDemo
+    // NSProxy 一个抽象超类，它定义了一个对象的API，作为其他对象或者还不存在的对象的替身。
+    
+    // TODO: Processes and Threads
+    // NSRunLoop NSThread NSLock
+    
+    // TODO: Streams, Sockets, and Ports
+    // Streams NSPipe NSPort
+
     @autoreleasepool {
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
     }

@@ -17,6 +17,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    NSString *assertConditionString = @"";
+    NSAssert1(assertConditionString, @"fuck", nil);
     return YES;
 }
 
