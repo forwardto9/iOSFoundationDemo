@@ -131,7 +131,10 @@
 }
 
 - (BOOL)listener:(NSXPCListener *)listener shouldAcceptNewConnection:(NSXPCConnection *)newConnection {
-    [[NSUserDefaults standardUserDefaults] setObject:@"fuck u" forKey:@"fuck"];
+    NSXPCInterface *xpcInterface = [NSXPCInterface interfaceWithProtocol:@protocol(Agent)];
+    newConnection.exportedInterface = xpcInterface;
+    newConnection.exportedObject = self;
+    [newConnection resume];
     return YES;
 }
 
@@ -141,6 +144,10 @@
 
 - (id)remoteObjectProxyWithErrorHandler:(void (^)(NSError * _Nonnull))handler {
     return self;
+}
+
+- (void)sendMessage:(NSString *)msg reply:(void (^)(NSString *))reply {
+    reply(@"fuck");
 }
 
 @end

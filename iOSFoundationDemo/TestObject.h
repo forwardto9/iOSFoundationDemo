@@ -7,12 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Interface.h"
 
-@protocol TestProtocol<NSObject>
-- (void)sendMessage:(NSString *)msg;
-@end;
-
-@interface TestObject : NSObject<NSCopying, NSMutableCopying, NSProgressReporting, NSXPCListenerDelegate,NSXPCProxyCreating>
+@interface TestObject : NSObject<NSCopying, NSMutableCopying, NSProgressReporting, NSXPCListenerDelegate,NSXPCProxyCreating, Agent>
 
 - (instancetype)initWithName:(NSString *)name age:(NSUInteger)age NS_DESIGNATED_INITIALIZER;
 - (instancetype)init NS_UNAVAILABLE;

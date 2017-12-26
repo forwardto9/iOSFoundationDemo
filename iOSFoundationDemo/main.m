@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 #import "TestObject.h"
+#import "Interface.h"
 
 int main(int argc, char * argv[]) {
 #pragma mark - Fundamentals
@@ -515,20 +516,25 @@ int main(int argc, char * argv[]) {
     // NSXPCProxyCreating NSXPCConnection NSXPCInterface
     
     NSLog(@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"fuck"]);
+    
     NSXPCListener *xpcListener = [NSXPCListener anonymousListener];
-    xpcListener.delegate = o1;
-    [xpcListener resume];
+//    xpcListener.delegate = o1;
+//    [xpcListener resume];
+//    [[NSRunLoop currentRunLoop] run];
     
     NSXPCListenerEndpoint *xpcListenerEndPoint = [xpcListener endpoint];
     NSXPCConnection *xpcConnection = [[NSXPCConnection alloc] initWithListenerEndpoint:xpcListenerEndPoint];
-    NSXPCInterface *xpcInterface = [NSXPCInterface interfaceWithProtocol:@protocol(TestProtocol)];
-    [xpcInterface setClasses:[NSSet setWithObject:[o1 class]] forSelector:@selector(sendMessage:) argumentIndex:0 ofReply:NO];
-    xpcConnection.exportedInterface = xpcInterface;
-    xpcConnection.exportedObject = o1;
     [xpcConnection resume];
-    [[xpcConnection remoteObjectProxy] performSelector:@selector(testxpc:) withObject:@"fuck1"];
-    
-    [[NSRunLoop currentRunLoop] run];
+    id <Agent> agent =  [xpcConnection remoteObjectProxyWithErrorHandler:^(NSError * _Nonnull error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"error %@", error.description);
+        });
+    }];
+    [agent sendMessage:@"fuck" reply:^(NSString *replyMsg) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"info %@", replyMsg);
+        });
+    }];
     
     // TODO: Run Time
     // refrence RunTimeDemo
@@ -539,7 +545,6 @@ int main(int argc, char * argv[]) {
     
     // TODO: Streams, Sockets, and Ports
     // Streams NSPipe NSPort
-
     @autoreleasepool {
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
     }
