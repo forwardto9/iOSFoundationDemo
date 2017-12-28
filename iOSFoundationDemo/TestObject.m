@@ -150,4 +150,33 @@
     reply(@"fuck");
 }
 
+- (void)startRequestResources {
+    NSSet *resourcesTags = [NSSet setWithArray:@[@"test1", @"test2", @"test3"]];
+     self.resourceRequest = [[NSBundleResourceRequest alloc] initWithTags:resourcesTags];
+    [self.resourceRequest.progress addObserver:self forKeyPath:@"fractionCompleted" options:NSKeyValueObservingOptionNew context:@"observeResourcesTagsLoad"];
+    
+    [self.resourceRequest conditionallyBeginAccessingResourcesWithCompletionHandler:^(BOOL resourcesAvailable) {
+        if (resourcesAvailable) {
+            NSLog(@"resourcesAvailable");
+        } else {
+            // access from App Store
+            [NSOperationQueue.mainQueue addOperationWithBlock:^{
+                [self.resourceRequest beginAccessingResourcesWithCompletionHandler:^(NSError * _Nullable error) {
+                    NSLog(@"beginAccessing");
+                    NSBundle *resourceBundle = self.resourceRequest.bundle;
+                    NSLog(@"%@", [resourceBundle pathsForResourcesOfType:@"png" inDirectory:nil]);
+                    [self.resourceRequest endAccessingResources];
+                }];
+            }];
+        }
+    }];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    if (object == self.resourceRequest && [keyPath isEqualToString:@"fractionCompleted"]) {
+        NSLog(@"resources load");
+        
+    }
+}
+
 @end

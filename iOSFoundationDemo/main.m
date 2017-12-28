@@ -422,6 +422,9 @@ int main(int argc, char * argv[]) {
     NSLog(@"%@", [NSBundle mainBundle].infoDictionary);
     NSLog(@"%@", [[NSBundle mainBundle] executableArchitectures]);
     
+    [o1 startRequestResources];
+    
+    
     // Loading Code from a Bundle
     NSError *error = nil;
     NSLog(@"%d", [[NSBundle mainBundle] preflightAndReturnError:&error]);
@@ -530,11 +533,14 @@ int main(int argc, char * argv[]) {
             NSLog(@"error %@", error.description);
         });
     }];
-    [agent sendMessage:@"fuck" reply:^(NSString *replyMsg) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"info %@", replyMsg);
-        });
-    }];
+    if ([(NSObject *)agent respondsToSelector:@selector(sendMessage:reply:)]) {
+//        [agent sendMessage:@"fuck" reply:^(NSString *replyMsg) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                NSLog(@"info %@", replyMsg);
+//            });
+//        }];
+    }
+    
     
     // TODO: Run Time
     // refrence RunTimeDemo

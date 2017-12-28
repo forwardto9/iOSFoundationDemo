@@ -328,14 +328,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 299MFJ63GP;
 				INFOPLIST_FILE = iOSFoundationDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ON_DEMAND_RESOURCES_INITIAL_INSTALL_TAGS = test3;
 				ON_DEMAND_RESOURCES_PREFETCH_ORDER = test2;
 				PRODUCT_BUNDLE_IDENTIFIER = tencent.iOSFoundationDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "4fa06929-99da-4177-a0bf-6d3b982be84a";
+				PROVISIONING_PROFILE_SPECIFIER = common_dev;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

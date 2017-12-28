@@ -17,6 +17,7 @@
 @property (nonatomic, assign, readonly) NSUInteger age;
 @property (nonatomic, strong) NSUndoManager *undoManager;
 @property (nonatomic, weak) id <NSProgressReporting>report;
+@property (nonatomic, strong) NSBundleResourceRequest *resourceRequest;
 
 
 - (void)method1:(NSString *)p1 __deprecated;
@@ -27,5 +28,6 @@
 - (NSUserActivity *)addUserActivity;
 
 - (void)notificationMethod;
+- (void)startRequestResources;
 
 @end
