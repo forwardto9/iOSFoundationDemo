@@ -8,6 +8,7 @@
 
 #import "TestObject.h"
 #import <objc/runtime.h>
+#import <UIKit/UIKit.h>
 
 @implementation TestObject
 
@@ -158,13 +159,21 @@
     [self.resourceRequest conditionallyBeginAccessingResourcesWithCompletionHandler:^(BOOL resourcesAvailable) {
         if (resourcesAvailable) {
             NSLog(@"resourcesAvailable");
+            UIImage *image = [UIImage imageNamed:@"1" inBundle:self.resourceRequest.bundle compatibleWithTraitCollection:nil];
+            if (image) {
+                NSLog(@"conditionally  find 1");
+            }
+            [self.resourceRequest endAccessingResources];
         } else {
             // access from App Store
             [NSOperationQueue.mainQueue addOperationWithBlock:^{
                 [self.resourceRequest beginAccessingResourcesWithCompletionHandler:^(NSError * _Nullable error) {
                     NSLog(@"beginAccessing");
                     NSBundle *resourceBundle = self.resourceRequest.bundle;
-                    NSLog(@"%@", [resourceBundle pathsForResourcesOfType:@"png" inDirectory:nil]);
+                    UIImage *image = [UIImage imageNamed:@"1" inBundle:resourceBundle compatibleWithTraitCollection:nil];
+                    if (image) {
+                        NSLog(@"begin find 1");
+                    }
                     [self.resourceRequest endAccessingResources];
                 }];
             }];
