@@ -38,7 +38,6 @@
 		C25C56941FEBD72600A865FA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C25C569B1FEBD76300A865FA /* TestObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestObject.m; sourceTree = "<group>"; };
 		C25C569C1FEBD76300A865FA /* TestObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestObject.h; sourceTree = "<group>"; };
-		C2A966461FF1E983006B84FB /* Interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Interface.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,7 +83,6 @@
 				C25C568E1FEBD72600A865FA /* Assets.xcassets */,
 				C25C56901FEBD72600A865FA /* LaunchScreen.storyboard */,
 				C25C56931FEBD72600A865FA /* Info.plist */,
-				C2A966461FF1E983006B84FB /* Interface.h */,
 				C25C56941FEBD72600A865FA /* main.m */,
 				C24AE0E31FECF8F0001E2775 /* Media.xcassets */,
 				C24AE0D91FECE460001E2775 /* Settings.bundle */,

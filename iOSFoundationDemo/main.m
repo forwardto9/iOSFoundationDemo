@@ -9,7 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 #import "TestObject.h"
-#import "Interface.h"
+
+NSArray *threadArray = nil;
+
+// 默认可能是atomic的，即原子操作
+NSInteger threadIntNum = 0;
 
 int main(int argc, char * argv[]) {
 #pragma mark - Fundamentals
@@ -403,6 +407,9 @@ int main(int argc, char * argv[]) {
         NSLog(@"battery level is %3f", [[UIDevice currentDevice] batteryLevel]);
     }];
     
+    id activity = [processInfo beginActivityWithOptions:NSActivityIdleSystemSleepDisabled reason:@"需要一直执行"];
+    
+    
     // TODO:Resource
     [[NSBundle allBundles] enumerateObjectsUsingBlock:^(NSBundle * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSLog(@"image path is %@", [obj pathForResource:@"share_qq" ofType:@"png"]);
@@ -514,43 +521,94 @@ int main(int argc, char * argv[]) {
     // NSNetServiceBrowser NSNetServiceBrowserDelegate
 
 #pragma mark - Low-Level Utilities
-    // TODO:XPC
+    // TODO:XPC， to look XPCDemo.git
     // Manage secure interprocess communication.
     // NSXPCProxyCreating NSXPCConnection NSXPCInterface
     
-    NSLog(@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"fuck"]);
-    
-    NSXPCListener *xpcListener = [NSXPCListener anonymousListener];
-//    xpcListener.delegate = o1;
-//    [xpcListener resume];
-//    [[NSRunLoop currentRunLoop] run];
-    
-    NSXPCListenerEndpoint *xpcListenerEndPoint = [xpcListener endpoint];
-    NSXPCConnection *xpcConnection = [[NSXPCConnection alloc] initWithListenerEndpoint:xpcListenerEndPoint];
-    [xpcConnection resume];
-    id <Agent> agent =  [xpcConnection remoteObjectProxyWithErrorHandler:^(NSError * _Nonnull error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"error %@", error.description);
-        });
-    }];
-    if ([(NSObject *)agent respondsToSelector:@selector(sendMessage:reply:)]) {
-//        [agent sendMessage:@"fuck" reply:^(NSString *replyMsg) {
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                NSLog(@"info %@", replyMsg);
-//            });
-//        }];
-    }
-    
-    
-    // TODO: Run Time
+    // TODO: Run Time,  to look RuntimeDemo.git
     // refrence RunTimeDemo
     // NSProxy 一个抽象超类，它定义了一个对象的API，作为其他对象或者还不存在的对象的替身。
     
-    // TODO: Processes and Threads
+    // TODO: Processes and Threads, look above
     // NSRunLoop NSThread NSLock
+ /*
+    NSLock *lock = [NSLock new];
+//    NSLock *lock = nil;
+    [[[NSThread alloc] initWithBlock:^{
+        [lock lock];
+        //thread A
+        for (int i = 0; i < 10000; i ++) {
+            if (i % 2 == 0) {
+                threadArray = @[@"1", @"2", @"3"];
+            }
+            else {
+                threadArray = @[@"1"];
+            }
+            NSLog(@"Thread A: %@\n",threadArray);
+        }
+        [lock unlock];
+        
+    }] start];
+    
+        [[[NSThread alloc] initWithBlock:^{
+             [lock lock];
+            //thread B
+            for (int i = 0; i < 10000; i ++) {
+                if (threadArray.count >= 2) {
+                    [threadArray objectAtIndex:1];
+                }
+                NSLog(@"Thread B: %@\n", threadArray);
+            }
+            [lock unlock];
+        }] start];
+    */
+    // 以下3个线程对threadIntNum进行累加操作，但是未必结果是： 10000 +  10000 + 10000，则证明出现了线程不安全
+    [[[NSThread alloc] initWithBlock:^{
+        @synchronized(o1) { //  对o1的内存实例上锁操作
+            //thread A
+            for (int i = 0; i < 10000; i ++) {
+                o1.threadIntNum = o1.threadIntNum + 1; // 这一步并非是原子操作
+            }
+            NSLog(@"Thread A: %ld\n", (long)o1.threadIntNum);
+        }
+    }] start];
+    
+    [[[NSThread alloc] initWithBlock:^{
+        @synchronized(o1) { //  对o1的内存实例上锁操作
+            //thread B
+            for (int i = 0; i < 10000; i ++) {
+                o1.threadIntNum = o1.threadIntNum + 1; // 这一步并非是原子操作
+            }
+            NSLog(@"Thread B: %ld\n", (long)o1.threadIntNum);
+        }
+    }] start];
+    
+    [[[NSThread alloc] initWithBlock:^{
+        @synchronized(o1) { //  对o1的内存实例上锁操作
+            //thread C
+            for (int i = 0; i < 10000; i ++) {
+                o1.threadIntNum = o1.threadIntNum + 1; // 这一步并非是原子操作
+            }
+            NSLog(@"Thread C: %ld\n", (long)o1.threadIntNum);
+        }
+    }] start];
+    
+    // dead lock demo
+    // 死锁是因为多线程访问共享资源，由于访问的顺序不当所造成的
+    //通常是一个线程锁定了一个资源A，而又想去锁定资源B；
+    //在另一个线程中，锁定了资源B，而又想去锁定资源A以完成自身的操作;
+    //两个线程都想得到对方的资源，而不愿释放自己的资源，造成两个线程都在等待，而无法执行的情况。
+    NSLog(@"1"); // 任务1
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        NSLog(@"2"); // 任务2
+    });
+    NSLog(@"3"); // 任务3
     
     // TODO: Streams, Sockets, and Ports
     // Streams NSPipe NSPort
+    
+    [processInfo endActivity:activity];
+    
     @autoreleasepool {
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
     }

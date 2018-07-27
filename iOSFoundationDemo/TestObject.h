@@ -7,9 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Interface.h"
 
-@interface TestObject : NSObject<NSCopying, NSMutableCopying, NSProgressReporting, NSXPCListenerDelegate,NSXPCProxyCreating, Agent>
+@interface TestObject : NSObject<NSCopying, NSMutableCopying, NSProgressReporting>
 
 - (instancetype)initWithName:(NSString *)name age:(NSUInteger)age NS_DESIGNATED_INITIALIZER;
 - (instancetype)init NS_UNAVAILABLE;
@@ -18,6 +17,14 @@
 @property (nonatomic, strong) NSUndoManager *undoManager;
 @property (nonatomic, weak) id <NSProgressReporting>report;
 @property (nonatomic, strong) NSBundleResourceRequest *resourceRequest;
+
+
+/**
+ atomic，表明对值类型是原子操作，即在其setter和getter中设置memory barrier
+ 保证了原子操作的顺序性，只是编译器尽量保证 【多线程读写】 的安全，实际并不是完全能保证
+ 但是对于 【只读】 或者是 【只写】 ，原子操作应该是可以保证其顺序，即多线程安全
+ */
+@property (atomic, assign) NSInteger threadIntNum;
 
 
 - (void)method1:(NSString *)p1 __deprecated;

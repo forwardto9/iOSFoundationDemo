@@ -131,26 +131,6 @@
     NSLog(@"%s, %@, %@", __FUNCTION__, notification.object, notification.userInfo);
 }
 
-- (BOOL)listener:(NSXPCListener *)listener shouldAcceptNewConnection:(NSXPCConnection *)newConnection {
-    NSXPCInterface *xpcInterface = [NSXPCInterface interfaceWithProtocol:@protocol(Agent)];
-    newConnection.exportedInterface = xpcInterface;
-    newConnection.exportedObject = self;
-    [newConnection resume];
-    return YES;
-}
-
-- (id)remoteObjectProxy {
-    return self;
-}
-
-- (id)remoteObjectProxyWithErrorHandler:(void (^)(NSError * _Nonnull))handler {
-    return self;
-}
-
-- (void)sendMessage:(NSString *)msg reply:(void (^)(NSString *))reply {
-    reply(@"fuck");
-}
-
 - (void)startRequestResources {
     NSSet *resourcesTags = [NSSet setWithArray:@[@"test1", @"test2", @"test3"]];
      self.resourceRequest = [[NSBundleResourceRequest alloc] initWithTags:resourcesTags];
